@@ -5,6 +5,7 @@ from sam2 import load_model
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 from io import BytesIO
 import base64
+import os
 
 import numpy as np
 import json
@@ -15,9 +16,24 @@ model = load_model(
     device="cpu"
 )
 predictor = SAM2ImagePredictor(model)
+path = os.path.join(os.path.dirname(__file__), 'static')
 
 app = Flask(__name__)
 cors = CORS(app)
+
+if os.path.exists(path) and os.path.isdir(path):
+    app = Flask(__name__, static_folder=path)
+    cors = CORS(app)
+
+    @app.route('/')
+    @cross_origin()
+    def index():
+        return app.send_static_file('index.html')
+
+    @app.route('/<path:path>')
+    @cross_origin()
+    def static_file(path):
+        return app.send_static_file(path)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
