@@ -1,4 +1,0 @@
-samv2
-Flask
-flask_cors
-pytest

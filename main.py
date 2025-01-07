@@ -6,13 +6,27 @@ from sam2.sam2_image_predictor import SAM2ImagePredictor
 from io import BytesIO
 import base64
 import os
+import requests
 
 import numpy as np
 import json
 
+variant = "tiny"
+modelPath = os.path.join(os.path.dirname(__file__), 'models/sam2_hiera_tiny.pt')
+if not os.path.exists(modelPath):
+    print("Downloading model sam2_hiera_tiny...")
+    modelUrl = "https://huggingface.co/facebook/sam2-hiera-tiny/resolve/main/sam2_hiera_tiny.pt"
+    try:
+        res = requests.get(modelUrl)
+        with open(modelPath, 'wb') as f:
+            f.write(res.content)
+    except Exception as e:
+        print(f"Failed to download model: {str(e)}")
+
+
 model = load_model(
-    variant="tiny",
-    ckpt_path="models/sam2_hiera_tiny.pt",
+    variant=variant,
+    ckpt_path=modelPath,
     device="cpu"
 )
 predictor = SAM2ImagePredictor(model)

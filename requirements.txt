@@ -1,0 +1,6 @@
+samv2
+Flask
+flask_cors
+pytest
+requests
+waitress
