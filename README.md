@@ -2,6 +2,11 @@
 
 Simple Image Annotator Using SAM2
 
+## Prerequisites
+
+-   Node.js >= 20
+-   Python >= 3.10
+
 ## Installation
 
 ```bash
@@ -10,6 +15,7 @@ cd Image-Annotation
 npm install
 python -m venv env
 source env/bin/activate ## Or Windows env\Scripts\activate
+pip install -r requirements.txt
 ```
 
 ## Running Locally
